@@ -4,8 +4,15 @@ import ChartBudget from './ChartBudget'
 
 function Budget() {
 
-  const {presupuesto, expensives, balance, setBalance} = useContext(ContextExpense)
+  const {presupuesto, expensives, setExpensives, balance, setBalance} = useContext(ContextExpense)
   
+  // useEffect(() => {
+  //   const items = JSON.parse(localStorage.getItem('Expensives'))
+  //   if(items){
+  //     setExpensives(items)
+  //   }
+  // },[])
+
   useEffect(() => {
     const sumExpensives = expensives.reduce(
       (accumulator, expense) => accumulator + parseInt(expense.cost), 0

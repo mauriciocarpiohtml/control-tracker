@@ -7,7 +7,9 @@ function Expense({children}) {
     const [presupuesto, setPresupuesto] = useState(1500)
 
     // Lista de gastos acumulados
-    const [expensives, setExpensives] = useState([])
+    const [expensives, setExpensives] = useState(
+      JSON.parse(localStorage.getItem('expensives')) ?? []
+    )
 
     // Para calcular el saldo restante
     const [balance, setBalance] =useState(presupuesto)

@@ -69,6 +69,10 @@ function Form() {
       }
     }, [segment])
 
+    useEffect(() => {
+      localStorage.setItem('expensives', JSON.stringify(expensives))
+    },[expensives])
+
 
   return (
     <div className='mt-3 p-5 lg:w-[40%] bg-gray-100 shadow-lg rounded-md md:h-[360px] mx-auto'>

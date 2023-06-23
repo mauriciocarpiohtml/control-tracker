@@ -6,10 +6,10 @@ function Record() {
 
     async function handleClick(){
         if (listening) {
-          await stop();
+          await stop()
         } else {
-          await attachMicrophone();
-          await start();
+          await attachMicrophone()
+          await start()
         }
       }
 
