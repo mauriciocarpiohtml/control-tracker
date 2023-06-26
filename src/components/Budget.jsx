@@ -1,25 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
-import ContextExpense from '../context/expense'
+import { useBudget } from '../hooks/useBudget'
 import ChartBudget from './ChartBudget'
 
 function Budget() {
 
-  const {presupuesto, expensives, setExpensives, balance, setBalance} = useContext(ContextExpense)
-  
-  // useEffect(() => {
-  //   const items = JSON.parse(localStorage.getItem('Expensives'))
-  //   if(items){
-  //     setExpensives(items)
-  //   }
-  // },[])
-
-  useEffect(() => {
-    const sumExpensives = expensives.reduce(
-      (accumulator, expense) => accumulator + parseInt(expense.cost), 0
-    )
-    const updatedBalance = presupuesto - sumExpensives
-    setBalance(updatedBalance)
-  }, [expensives])
+ const {expensives, balance} = useBudget()
 
   return (
     <div className='p-5 lg:w-[60%] mt-3 bg-gray-100 shadow-lg rounded-md md:h-[360px]'>

@@ -1,14 +1,9 @@
-import { useContext } from "react"
-import ContextExpense from "../context/expense"
+import { useCard } from "../hooks/useCard"
 
 function ListCard({item}) {
-    const {expensives, setExpensives} = useContext(ContextExpense)
-
-    function deleteCharge() {
-        const expensiveFilter = expensives.filter((charge) => charge !== item);
-        setExpensives(expensiveFilter);
-      }
-
+    
+const {deleteCharge} = useCard({item})
+  
   return (
     <div className='h-[35] bg-gray-100 flex justify-between shadow-lg' >
       <div className='flex gap-5 p-3'>

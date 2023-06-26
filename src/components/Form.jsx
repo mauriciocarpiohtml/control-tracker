@@ -1,79 +1,15 @@
-import { useState, useContext, useEffect } from 'react'
 import { categories } from '../utils/constants'
-import ContextExpense from '../context/expense'
-import { useSpeechContext } from '@speechly/react-client'
-import Record from './Record'
+import { useForm } from '../hooks/useForm'
+import { useMicrophone } from '../hooks/useMicrophone'
+
 
 function Form() {
-    // Me traigo la lista de todos los gastos del context
-    const {expensives, setExpensives, balance} = useContext(ContextExpense)
-
-    // Estados para validar el form
-    const [expense, setExpense] = useState('')
-    const [category, setCategory] = useState('')
-    const [cost, setCost] = useState('')
-    const [date, setDate] = useState('')
+    const {expense, setExpense, category, setCategory, cost, setCost,
+    date, setDate, handleForm} = useForm()
     
-   async function handleForm(e){
-        e.preventDefault()
-        if(balance === 0 || cost > balance){
-          alert(`you don't have enough funds`)
-          return
-        }
+    const {listening, handleClick} = useMicrophone()
 
-        
-          if([expense, category, cost, date].includes('') ){
-            alert('All fields are require')
-            return
-        }
-        const objExpense ={expense, category, cost, date}
-        setExpensives([...expensives,objExpense])    
-        
-        setExpense('')
-        setCategory('')
-        setCost('')
-        setDate('')
-    }
-
-    // Formulario a voz
-    const { listening, segment, attachMicrophone, start, stop } = useSpeechContext()
-
-    // funcion para activar el microfono
-    async function handleClick(){
-      if (listening) {
-        await stop()
-      } else {
-        await attachMicrophone()
-        await start()
-      }
-    }
-
-    useEffect(() => {
-      if (segment && segment.isFinal) {
-        segment.entities.forEach((entitie) => {
-          //El caso que voy a evaluar es el tipo de entidad
-          switch(entitie.type){
-            case 'word':
-              setExpense(entitie.value)
-              break
-              // Convirtiendo la primera letra de categoria en mayuscula porque no coincide el value
-            case 'category': setCategory(`${entitie.value.charAt(0)}${entitie.value.slice(1).toLowerCase()}`)
-            break
-            case 'cost': setCost(entitie.value)
-            break
-            case 'date': setDate(entitie.value)
-            break
-          }
-        })
-        
-      }
-    }, [segment])
-
-    useEffect(() => {
-      localStorage.setItem('expensives', JSON.stringify(expensives))
-    },[expensives])
-
-
+    
   return (
     <div className='mt-3 p-5 lg:w-[40%] bg-gray-100 shadow-lg rounded-md md:h-[360px] mx-auto'>
       <form

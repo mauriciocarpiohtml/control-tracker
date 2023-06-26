@@ -15,7 +15,6 @@ function Expense({children}) {
     const [balance, setBalance] =useState(presupuesto)
     
 
-
   return (
     <ContextExpense.Provider
     value={{presupuesto, expensives, setExpensives,balance, setBalance}}>
